@@ -126,8 +126,8 @@ tfo_writev(gnutls_transport_ptr_t ptr, const giovec_t * iovec, int iovec_cnt)
 		if (ret == 0)
 			p->connect_only = 0;
 	}
-# elif defined(TCP_FASTOPEN_OSX)
-	{
+# elif defined(TCP_FASTOPEN_OSX) && HAVE_VALID_CONNECTX
+        {
 		sa_endpoints_t endpoints = { .sae_dstaddr = (struct sockaddr*)&p->connect_addr, .sae_dstaddrlen = p->connect_addrlen };
 
 		ret = connectx(fd, &endpoints, SAE_ASSOCID_ANY, CONNECT_RESUME_ON_READ_WRITE | CONNECT_DATA_IDEMPOTENT, NULL, 0, NULL, NULL);
